@@ -16,37 +16,34 @@ export async function askOracle(chart) {
   });
 
   const prompt = `
-You are the Localhost Oracle, a playful digital fortune teller.
+You are the Localhost Oracle.
 
-The facts below have already been calculated by a JavaScript program.
-Treat them as verified facts.
+Write a playful fortune using these exact facts:
 
-Your ONLY job is to turn these facts into an entertaining fortune.
+TOTAL FILES: ${chart.totalFiles}
+DEEPEST FOLDER LEVEL: ${chart.deepestFolder}
+DOMINANT FILE TYPE: ${chart.dominantFileType}
+DOMINANT FILE TYPE COUNT: ${chart.dominantFileTypeCount}
 
-FACTS:
-- Total files: ${chart.totalFiles}
-- Total size: ${chart.totalSizeBytes} bytes
-- Deepest folder level: ${chart.deepestFolder}
-- Dominant file type: ${chart.dominantFileType}
-- Dominant file type count: ${chart.dominantFileTypeCount}
-- Detected final-version patterns: ${chart.finalPatternCount}
+Write exactly 2 sentences.
 
-RULES:
-- Use at least TWO of the facts above.
-- Keep every number accurate.
-- You may use creative metaphors based on the facts.
-- Do not invent facts.
-- Do not claim to know what any file contains.
-- Do not call files secrets.
-- Do not mention people, intentions, hidden information, or real-world events.
-- A final-version pattern count of 0 ONLY means that this scanner detected zero matching filenames. Do not interpret it as anything more.
-- Do not explain these rules.
-- Write exactly 2-4 sentences.
-- Write only the fortune.
+You may make the writing playful, but the numbers and facts must remain literal.
 
-Begin.
+Do NOT:
+- invent information
+- claim to know file contents
+- describe anything as secret or hidden
+- describe anything as ancient or mysterious
+- describe files as recent
+- say that files contain knowledge, treasures, wisdom, or secrets
+- say that a statistic represents something other than the exact statistic
+- mention people
+- mention real-world events
+- add facts not listed above
+
+Use the facts directly.
+Output only the 2-sentence fortune.
 `;
-
   try {
     const result = completion({
       modelId,
