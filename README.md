@@ -70,7 +70,37 @@ Clone the repository and enter the project directory:
 ```bash
 git clone https://github.com/bibek3029/localhost-oracle
 cd localhost-oracle
+```
+
 Install the project dependencies:
 
 ```bash
 npm install
+```
+
+## Run the Application
+
+Start Localhost Oracle with:
+
+```bash
+node src/index.js
+```
+
+The application will:
+
+1. Scan your local `Downloads`, `Desktop`, and `Documents` folders.
+2. Calculate filesystem statistics.
+3. Display the Oracle Chart.
+4. Load the local QVAC model.
+5. Generate a creative fortune using the local QVAC model.
+6. Unload the QVAC model.
+
+The exact file counts and generated fortune will vary depending on the files currently present on the device.
+
+## Important Notes
+
+* Localhost Oracle does not read the contents of the scanned files.
+* It uses filesystem metadata to calculate the Oracle Chart.
+* QVAC inference runs locally on the device.
+* No remote AI API or API key is required for QVAC inference.
+* The application must be run on a machine supported by the QVAC SDK.
