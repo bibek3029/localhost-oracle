@@ -16,34 +16,23 @@ export async function askOracle(chart) {
   });
 
   const prompt = `
-You are the Localhost Oracle.
+You are helping the Localhost Oracle create a tiny decorative phrase.
 
-Write a playful fortune using these exact facts:
+Generate ONE short, playful phrase.
 
-TOTAL FILES: ${chart.totalFiles}
-DEEPEST FOLDER LEVEL: ${chart.deepestFolder}
-DOMINANT FILE TYPE: ${chart.dominantFileType}
-DOMINANT FILE TYPE COUNT: ${chart.dominantFileTypeCount}
+The phrase must:
+- be 3 to 8 words long
+- contain no numbers
+- contain no file types
+- contain no claims about files
+- contain no claims about people
+- contain no claims about events
+- not mention secrets, treasure, mystery, hidden things, ancient things, or valuable things
+- simply sound playful and suitable before a factual computer report
 
-Write exactly 2 sentences.
-
-You may make the writing playful, but the numbers and facts must remain literal.
-
-Do NOT:
-- invent information
-- claim to know file contents
-- describe anything as secret or hidden
-- describe anything as ancient or mysterious
-- describe files as recent
-- say that files contain knowledge, treasures, wisdom, or secrets
-- say that a statistic represents something other than the exact statistic
-- mention people
-- mention real-world events
-- add facts not listed above
-
-Use the facts directly.
-Output only the 2-sentence fortune.
+Return ONLY the phrase.
 `;
+
   try {
     const result = completion({
       modelId,
@@ -56,16 +45,25 @@ Output only the 2-sentence fortune.
       stream: true
     });
 
-    let fortune = "";
+    let phrase = "";
 
     for await (const token of result.tokenStream) {
-      process.stdout.write(token);
-      fortune += token;
+      phrase += token;
     }
 
-    return fortune;
+    phrase = phrase
+      .replace(/\s+/g, " ")
+      .replace(/^["'“”]+|["'“”]+$/g, "")
+      .trim();
+
+
+    console.log(
+      `${phrase}: your local scan found ${chart.totalFiles} files, reaching a deepest folder level of ${chart.deepestFolder}. The most common file type is ${chart.dominantFileType}, with ${chart.dominantFileTypeCount} files.`
+    );
+
+    return phrase;
   } finally {
     await unloadModel({ modelId });
-    console.log("\n\nQVAC model unloaded.");
+    console.log("\nQVAC model unloaded.");
   }
 }
