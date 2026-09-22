@@ -70,3 +70,7 @@ Clone the repository and enter the project directory:
 ```bash
 git clone https://github.com/bibek3029/localhost-oracle
 cd localhost-oracle
+Install the project dependencies:
+
+```bash
+npm install
